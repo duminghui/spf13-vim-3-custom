@@ -15,9 +15,9 @@
 #   limitations under the License.
 
 ############################  SETUP PARAMETERS
-app_name='spf13-vim-custom'
-[ -z "$APP_PATH" ] && APP_PATH="$HOME/.spf13-vim-3-custom"
-[ -z "$REPO_URI" ] && REPO_URI='https://github.com/duminghui/spf13-vim-3-custom.git'
+app_name='vim-custom'
+[ -z "$APP_PATH" ] && APP_PATH="$HOME/.vim-custom"
+[ -z "$REPO_URI" ] && REPO_URI='https://github.com/duminghui/vim-custom.git'
 [ -z "$REPO_BRANCH" ] && REPO_BRANCH='master'
 debug_mode='0'
 
@@ -80,6 +80,19 @@ lnif() {
 
 ############################ SETUP FUNCTIONS
 
+do_backup() {
+    if [ -e "$1" ] || [ -e "$2" ] || [ -e "$3" ]; then
+        msg "Attempting to back up your original vim configuration."
+        today=`date +%Y%m%d_%s`
+        for i in "$1" "$2" "$3"; do
+            [ -e "$i" ] && [ ! -L "$i" ] && mv -v "$i" "$i.$today";
+        done
+        ret="$?"
+        success "Your original vim configuration has been backed up."
+        debug
+   fi
+}
+
 sync_repo() {
     local repo_path="$1"
     local repo_uri="$2"
@@ -109,6 +122,8 @@ create_symlinks() {
     lnif "$source_path/.vimrc.local"         "$target_path/.vimrc.local"
     lnif "$source_path/.vimrc.bundles.local" "$target_path/.vimrc.bundles.local"
     lnif "$source_path/.vimrc.before.local"  "$target_path/.vimrc.before.local"
+    lnif "$source_path/.xvimrc"              "$target_path/.xvimrc"
+    lnif "$source_paht/.ideavimrc"           "$target_path/.ideavimrc"
 
     ret="$?"
     success "Setting up vim symlinks."
@@ -120,6 +135,12 @@ variable_set "$HOME"
 program_must_exist "vim"
 program_must_exist "git"
 
+do_backup       "$HOME/.vimrc.local" \
+                "$HOME/.vimrc.bundles.local" \
+                "$HOME/.vimrc.before.local" \
+                "$HOME/.xvimrc" \
+                "$HOME/.ideavimrc"
+
 sync_repo       "$APP_PATH" \
                 "$REPO_URI" \
                 "$REPO_BRANCH" \
@@ -129,4 +150,4 @@ create_symlinks "$APP_PATH" \
                 "$HOME"
 
 msg             "\nThanks for installing $app_name."
-msg             "© `date +%Y` https://github.com/duminghui/spf13-vim-3-custom"
+msg             "© `date +%Y` https://github.com/duminghui/vim-custom"
