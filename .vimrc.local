@@ -133,4 +133,4 @@ let g:ctrlp_custom_ignore = {
 "vim-indent-guides{
 let g:indent_guides_guide_size = 1
 "}
-
+set guifont=Monaco:h12
