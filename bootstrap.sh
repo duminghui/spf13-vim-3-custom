@@ -81,10 +81,10 @@ lnif() {
 ############################ SETUP FUNCTIONS
 
 do_backup() {
-    if [ -e "$1" ] || [ -e "$2" ] || [ -e "$3" ]; then
+    if [ -e "$1" ] || [ -e "$2" ] || [ -e "$3" ] || [ -e "$4" ] || [-e "$5" ]; then
         msg "Attempting to back up your original vim configuration."
         today=`date +%Y%m%d_%s`
-        for i in "$1" "$2" "$3"; do
+        for i in "$1" "$2" "$3" "$4" "$5"; do
             [ -e "$i" ] && [ ! -L "$i" ] && mv -v "$i" "$i.$today";
         done
         ret="$?"
