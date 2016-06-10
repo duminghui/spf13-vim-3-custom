@@ -123,7 +123,7 @@ create_symlinks() {
     lnif "$source_path/.vimrc.bundles.local" "$target_path/.vimrc.bundles.local"
     lnif "$source_path/.vimrc.before.local"  "$target_path/.vimrc.before.local"
     lnif "$source_path/.xvimrc"              "$target_path/.xvimrc"
-    lnif "$source_paht/.ideavimrc"           "$target_path/.ideavimrc"
+    lnif "$source_path/.ideavimrc"           "$target_path/.ideavimrc"
 
     ret="$?"
     success "Setting up vim symlinks."
